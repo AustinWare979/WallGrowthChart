@@ -172,7 +172,7 @@
             border-radius: 50%;
             box-shadow: 0 0 8px rgba(0,0,0,0.3);
             object-fit: cover;
-            transition: transform 0.3s ease, z-index 0s 0.3s;
+			transition: transform 0.3s ease, z-index 0s 0.3s;
 			
         }
         
@@ -180,13 +180,12 @@
         .thumbnail-container:hover .thumbnail {
             transform: scale(5) translate(17px, 17px); /* Enlarge and reposition */
             border-radius: 5px; /* Make it square when zoomed */
-            z-index: 20;
+            z-index: 5;
             transition: transform 0.3s ease;
         }
 
 		/* Caption styling for zoomed image */
 		.thumbnail-container .caption {
-			z-index: 2; /* Give the caption a higher z-index to ensure it is always on top */
 			display: none;
 			position: absolute;
 			bottom: calc(0% + 20px);
@@ -202,6 +201,7 @@
 		}
 
 		.thumbnail-container:hover .caption {
+			z-index: 2; /* Give the caption a higher z-index to ensure it is always on top */
 			display: block;
 		}
 
