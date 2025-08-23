@@ -126,12 +126,13 @@
 			background-size: 240px 145.5%, cover;
 		    background-repeat: no-repeat;
 			background-position: top;
-			background-position-x: 240px; /* 27% */
+			background-position-x: 50px; /* 27% */
 			background-attachment: local;
         }
+
         #chart {
             position: relative;
-            width: 10px;
+            width: 0px;
             background-image: linear-gradient(to bottom, #eee 1px, transparent 1px);
             background-size: 100% 10px; /* Corresponds to 1 cm */
             border-right: 2px solid #333;
@@ -155,6 +156,7 @@
             font-size: 12px;
         }
 
+
         /* --- Image Thumbnail Styling --- */
         .thumbnail-container {
             position: absolute;
@@ -176,7 +178,7 @@
         
         /* Zoom effect on hover */
         .thumbnail-container:hover .thumbnail {
-            transform: scale(5) translate(37px, 17px); /* Enlarge and reposition */
+            transform: scale(5) translate(17px, 17px); /* Enlarge and reposition */
             border-radius: 5px; /* Make it square when zoomed */
             z-index: 20;
             transition: transform 0.3s ease;
@@ -259,10 +261,10 @@
                 const totalHeight = (CHART_END_CM - CHART_START_CM) * PIXELS_PER_CM;
                 chart.style.height = `${totalHeight}px`;
 
-                for (let cm = CHART_START_CM; cm <= CHART_END_CM; cm++) {
+				for (let cm = CHART_START_CM; cm <= CHART_END_CM; cm++) {
                     const positionBottom = (cm - CHART_START_CM) * PIXELS_PER_CM;
                     
-                    const mark = document.createElement('div');
+                    //const mark = document.createElement('div');
                     mark.className = 'ruler-mark';
                     mark.style.bottom = `${positionBottom}px`;
 
@@ -276,7 +278,7 @@
                         chart.appendChild(label);
                     }
                     chart.appendChild(mark);
-                }
+                } 
             }
             
 			// ## 2. Add a picture to the chart ##
@@ -289,7 +291,7 @@
 				// Check for existing thumbnails at a similar height to "dodge" collisions
 				const existingThumbnails = chart.querySelectorAll('.thumbnail-container');
 				let collisionOffset = 0;
-				let newPositionLeft = 80; // Default left position
+				let newPositionLeft = 50; // Default left position
 
 				existingThumbnails.forEach(container => {
 					const existingHeight = parseFloat(container.dataset.height);
@@ -297,7 +299,7 @@
 					if (Math.abs(existingHeight - height) < 10) {
 						// If a collision is detected, offset the new thumbnail
 						collisionOffset += 20; // Offset by 20px to leave space for the thumbnail
-						if (collisionOffset > 100) {collisionOffset = 0}
+						if (collisionOffset > 130) {collisionOffset = 0}
 					}
 				});
 
