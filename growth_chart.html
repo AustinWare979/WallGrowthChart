@@ -31,9 +31,6 @@
             overflow-x: hidden;
         }
 
-        #side-panel:hover {
-            width: 250px;
-        }
 
         /* Gradient Overlay */
         #side-panel::before {
@@ -53,7 +50,7 @@
         }
 
         #side-panel:hover {
-            width: 250px; /* Expands on hover */
+            width: 150px; /* Expands on hover */
         }
         #side-panel h2 {
             margin-top: 0;
@@ -227,9 +224,9 @@
 
         <div class="file-controls">
              <button id="save-button">Save Chart Data</button>
-             <!--  To comment out the load local file button
+
 			 <label for="load-input" id="load-label">Load Chart Data</label> 
-			 -->
+
              <input type="file" id="load-input" accept=".json">
         </div>
     </div>
@@ -400,40 +397,75 @@
 				}
 			});
             
-            // ## 5. Load and display data from a selected JSON file ##
-           // Function to load and parse the JSON from a URL
-            async function loadDataFromUrl(url) {
-                try {
-                    const response = await fetch(url);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    const loadedData = await response.json();
+		   
+			// ## 5. Load and display data from a selected JSON file ##
+			loadInput.addEventListener('change', (event) => {
+				const file = event.target.files[0];
+				if (!file) {
+					return;
+				}
 
-                    // Clear existing chart pictures
-                    chart.querySelectorAll('.thumbnail-container').forEach(el => el.remove());
+				const reader = new FileReader();
+				reader.onload = function(e) {
+					try {
+						const loadedData = JSON.parse(e.target.result);
 
-                    // Load new pictures
-                    if (Array.isArray(loadedData)) {
-                        loadedData.forEach(item => {
-                            addPicture(item.height, item.src, item.caption);
-                        });
-                    }
-                    alert('Chart data loaded successfully!');
-                } catch (error) {
-                    alert('Error loading or parsing the JSON file from the URL.');
-                    console.error('URL load error:', error);
-                }
-            }
+						// Clear existing chart pictures
+						chart.querySelectorAll('.thumbnail-container').forEach(el => el.remove());
 
-            // Call the function with your static JSON file URL
-            // Replace 'your_static_url_here.json' with the actual URL of your JSON file.
-            loadDataFromUrl('https://austinware979.github.io/WallGrowthChart/Austin.json');
-            // *** REPLACED CODE BLOCK END ***
+						// Load new pictures
+						if (Array.isArray(loadedData)) {
+							loadedData.forEach(item => {
+								addPicture(item.height, item.src, item.caption);
+							});
+						}
+						alert('Chart data loaded successfully!');
+					} catch (error) {
+						alert('Error loading or parsing the JSON file.');
+						console.error('File load error:', error);
+					}
+				};
+				reader.readAsText(file);
+			});
+			// The code to call loadDataFromUrl() has been replaced as requested
+			// by the user to enable local file loading.
+		   
+		   
+			// The code to call loadDataFromUrl() has been replaced as requested
+			// by the user to enable local file loading.
 
-            // Initialize the chart on page load
-            createChartRuler();
-        });
+			async function loadDataFromUrl(url) {
+				try {
+					const response = await fetch(url);
+					if (!response.ok) {
+						throw new Error(`HTTP error! status: ${response.status}`);
+					}
+					const loadedData = await response.json();
+
+					// Clear existing chart pictures
+					chart.querySelectorAll('.thumbnail-container').forEach(el => el.remove());
+
+					// Load new pictures
+					if (Array.isArray(loadedData)) {
+						loadedData.forEach(item => {
+							addPicture(item.height, item.src, item.caption);
+						});
+					}
+					alert('Chart data loaded successfully!');
+				} catch (error) {
+					alert('Error loading or parsing the JSON file from the URL.');
+					console.error('URL load error:', error);
+				}
+			}
+
+			// Call the function with your static JSON file URL
+			// Replace 'your_static_url_here.json' with the actual URL of your JSON file.
+			loadDataFromUrl('https://austinware979.github.io/WallGrowthChart/Austin.json');
+			// *** REPLACED CODE BLOCK END ***
+
+			// Initialize the chart on page load
+			createChartRuler();
+			});
     </script>
 
 </body>
